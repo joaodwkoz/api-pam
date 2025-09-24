@@ -11,7 +11,7 @@ class UsuarioController extends Controller
     public function login(Request $request){
         $usuario = Usuario::where('email', $request->email)->first();
 
-        if(!Hash::check($request->senha, $usuario->senha)){
+        if(!$usuario && !Hash::check($request->senha, $usuario->senha)){
             return response()->json(['erro' => 'Credenciais inválidas'], 401);
         }
 
@@ -65,14 +65,12 @@ class UsuarioController extends Controller
 
             $usuario->save();
 
-            // Retorna o usuário criado em JSON, com status 201 (created)
             return response()->json([
                 'success' => true,
                 'usuario' => $usuario
             ], 201);
 
         } catch (\Exception $e) {
-            // Retorna erro em JSON, status 500
             return response()->json([
                 'success' => false,
                 'message' => 'Erro ao criar usuário',
@@ -99,11 +97,37 @@ class UsuarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
+    // Em app/Http/Controllers/UsuarioController.php
+
     public function update(Request $request, Usuario $usuario)
     {
-        $usuario->update($request->all());
+        try {
+            $usuario->fill($request->except(['senha', 'fotoPerfil']));
 
-        $usuario->save();
+            if ($request->filled('senha')) {
+                $usuario->senha = Hash::make($request->senha);
+            }
+
+            if ($request->hasFile('fotoPerfil')) {
+                $path = $request->file('fotoPerfil')->store('imgsFotoPerfil', 'public');
+                $usuario->fotoPerfil = $path;
+            }
+
+            $usuario->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Usuário atualizado com sucesso!',
+                'usuario' => $usuario
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Erro ao atualizar usuário.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
