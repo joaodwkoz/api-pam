@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\UsuarioController;
-use App\Models\Usuario;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,11 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
 
-Route::post('/login', [UsuarioController::class, 'login']);
-Route::post('/usuario', [UsuarioController::class, 'store']);
-Route::get('/usuario/{usuario}', [UsuarioController::class, 'show']);
-Route::put('/usuario/{usuario}', [UsuarioController::class, 'update']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::get('/usuario/{usuario}', [UsuarioController::class, 'show']);
+    Route::put('/usuario/{usuario}', [UsuarioController::class, 'update']);
+});

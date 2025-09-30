@@ -5,19 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UsuarioController extends Controller
 {
-    public function login(Request $request){
-        $usuario = Usuario::where('email', $request->email)->first();
-
-        if(!$usuario && !Hash::check($request->senha, $usuario->senha)){
-            return response()->json(['erro' => 'Credenciais inválidas'], 401);
-        }
-
-        return response()->json(['sucesso' => 'Credencias válidas', 'usuario'=> $usuario], 200);
-    }
-
     /**
      * Display a listing of the resource.
      */
@@ -42,9 +33,9 @@ class UsuarioController extends Controller
         try {
             $usuario = new Usuario();
 
-            $usuario->nome = $request->nome;
+            $usuario->nome = $request->name;
             $usuario->email = $request->email;
-            $usuario->senha = Hash::make($request->senha);
+            $usuario->senha = Hash::make($request->password);
 
             $img = $request->file('fotoPerfil');
 
@@ -97,18 +88,21 @@ class UsuarioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    // Em app/Http/Controllers/UsuarioController.php
 
     public function update(Request $request, Usuario $usuario)
     {
         try {
-            $usuario->fill($request->except(['senha', 'fotoPerfil']));
+            $usuario->fill($request->except(['password', 'fotoPerfil']));
 
-            if ($request->filled('senha')) {
-                $usuario->senha = Hash::make($request->senha);
+            if($request->filled('senha')){
+                $usuario->senha = Hash::make($request->password);
             }
 
-            if ($request->hasFile('fotoPerfil')) {
+            if($request->hasFile('fotoPerfil')){
+                if($usuario->fotoPerfil){
+                    Storage::disk('public')->delete($usuario->fotoPerfil);
+                }
+
                 $path = $request->file('fotoPerfil')->store('imgsFotoPerfil', 'public');
                 $usuario->fotoPerfil = $path;
             }

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->string('name');
             $table->string('email');
-            $table->string('senha');
+            $table->string('password');
+            $table->string('api_token', 80)->unique()->nullable()->default(null);
             $table->string('fotoPerfil')->nullable();
             $table->string('cep');
             $table->string('numero')->nullable();
