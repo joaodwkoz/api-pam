@@ -27,4 +27,9 @@ class Usuario extends Authenticatable
     {
         return $this->hasMany(Refeicao::class, 'usuario_id');
     }
+
+    public function copos()
+    {
+        return $this->hasMany(Copo::class, 'usuario_id');
+    }
 }

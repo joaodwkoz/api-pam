@@ -129,6 +129,11 @@ class UsuarioController extends Controller
      */
     public function destroy(Usuario $usuario)
     {
-        //
+        if($usuario->fotoPerfil){
+            Storage::disk('public')->delete($usuario->fotoPerfil);
+        }
+
+        $usuario->delete();
+        return response()->json(null, 204);
     }
 }

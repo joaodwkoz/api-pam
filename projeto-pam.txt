@@ -1,0 +1,41 @@
+agua (historico)
+pressao (historico)
+sangue (historico)
+calorias (ja fez)
+imc (medição de imc)
+frutas (api de frutas e infos da fruta)
+motivacional (dicas e conselhos)
+meditação (musica)
+remedio (cadastrar remédios)
+alergia (adicionar alergias)
+glicemia (sangue)
+vacinas (vacinas)
+emergencia (geolocalização, adicionar contatos de pessoas)
+
+marcos: frutas, imc, alergia, motivacional, sangue, vacinas
+
+joão: agua, e todo resto
+
+sugestões: trocar cores dos inputs (texto meio sumido)
+
+água:
+
+modal com os gráficos dentro e widgets de info;
+botão de configurações pra definir metas;
+home com os resultados do dia especifico (pode ir pra datas anteriores);
+opção de cadastrar copos customizados (com valores e icones customizados);
+ao clicar no copo o valor sobe e o velocimetro aumenta
+
+pressão:
+
+modal com os gráficos dentro e widgets de info;
+registros da medição: indicador baseado no valor, tipo, valor, horário e tags, botão que abre um modal com o texto (nota) da medição
+
+
+glicemia:
+
+modal com os gráficos dentro e widgets de info;
+momentos [jejum, café da manhã, almoço, jantar, ao dormir] com cartões antes ou depois com a medição;
+registros de medição: indicador e valor, contexto, icones secundarios com insulina (seringa) e carboidratos (icone de pão) e notas;
+modal de ação: valor da glicemia, tag do evento, um campo pra unidades de insulina, um campo pra contagem de carboidratos e notas adicionais;
+
