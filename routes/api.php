@@ -6,17 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RefeicaoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\Api\ImcController;
+use App\Http\Controllers\AlergiaController;
 
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -35,4 +26,20 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/refeicoes/{date}', [RefeicaoController::class, 'getRefeicoesByDate']);
     Route::post('/refeicoes', [RefeicaoController::class, 'storeAPI']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::get('/imc', [ImcController::class, 'index']); 
+    Route::post('/imc', [ImcController::class, 'store']); 
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+   
+    Route::get('/alergias', [AlergiaController::class, 'index']);     
+    Route::post('/alergias', [AlergiaController::class, 'store']);     
+    Route::delete('/alergias/{alergia}', [AlergiaController::class, 'destroy']); 
 });
