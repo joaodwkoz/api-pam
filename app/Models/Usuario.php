@@ -22,4 +22,9 @@ class Usuario extends Authenticatable
     protected $casts = [
         'password' => 'hashed',
     ];
+
+    public function refeicoes()
+    {
+        return $this->hasMany(Refeicao::class, 'usuario_id');
+    }
 }

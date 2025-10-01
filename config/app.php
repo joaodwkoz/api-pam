@@ -212,4 +212,6 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'fatsecret_key' => env('FATSECRET_KEY'),
+    'fatsecret_secret' => env('FATSECRET_SECRET'),
 ];
