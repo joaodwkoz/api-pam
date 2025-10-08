@@ -16,4 +16,9 @@ class Copo extends Model
     {
         return $this->belongsTo(Usuario::class, 'usuario_id');
     }
+
+    public function icone()
+    {
+        return $this->belongsTo(Icone::class, 'icone_id');
+    }
 }

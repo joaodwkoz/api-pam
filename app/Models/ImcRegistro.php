@@ -15,11 +15,10 @@ class ImcRegistro extends Model
         'peso',
         'altura',
         'imc',
-
     ];
 
-    public function usuario(): BelongsTo
+    public function usuario()
     {
         return $this->belongsTo(User::class, 'usuario_id');
-}
+    }
 }

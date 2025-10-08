@@ -26,19 +26,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/refeicoes/{date}', [RefeicaoController::class, 'getRefeicoesByDate']);
     Route::post('/refeicoes', [RefeicaoController::class, 'storeAPI']);
-});
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
 
     Route::get('/imc', [ImcController::class, 'index']); 
-    Route::post('/imc', [ImcController::class, 'store']); 
-});
+    Route::post('/imc', [ImcController::class, 'store']);
 
-Route::middleware('auth:sanctum')->group(function () {
-   
     Route::get('/alergias', [AlergiaController::class, 'index']);     
     Route::post('/alergias', [AlergiaController::class, 'store']);     
     Route::delete('/alergias/{alergia}', [AlergiaController::class, 'destroy']); 

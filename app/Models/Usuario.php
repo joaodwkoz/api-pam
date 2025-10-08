@@ -32,4 +32,14 @@ class Usuario extends Authenticatable
     {
         return $this->hasMany(Copo::class, 'usuario_id');
     }
+
+    public function registrosIMC()
+    {
+        return $this->hasMany(ImcRegistro::class, 'usuario_id');
+    }
+
+    public function alergias()
+    {
+        return $this->hasMany(Alergia::class, 'usuario_id');
+    }
 }
