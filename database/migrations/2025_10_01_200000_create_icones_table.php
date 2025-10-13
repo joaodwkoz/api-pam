@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('icones', function (Blueprint $table) {
             $table->id();
             $table->string('nome')->unique();
-            $table->string('caminho');
-            $table->string('fotoIcone')->nullable();
+            $table->string('caminhoFoto');
             $table->timestamps();
         });
     }

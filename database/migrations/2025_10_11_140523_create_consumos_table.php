@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('copos', function (Blueprint $table) {
+        Schema::create('consumos', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
-            $table->integer('capacidade_ml');
+            $table->unsignedSmallInteger('volume_ml');
+            $table->unsignedBigInteger('copo_id');
             $table->unsignedBigInteger('usuario_id');
-            $table->unsignedBigInteger('icone_id')->nullable();
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
-            $table->foreign('icone_id')->references('id')->on('icones')->onDelete('cascade'); 
+            $table->foreign('copo_id')->references('id')->on('copos')->onDelete('cascade');
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade'); 
+            $table->timestamp('consumido_em')->useCurrent();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('copos');
+        Schema::dropIfExists('consumos');
     }
 };

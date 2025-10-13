@@ -10,7 +10,7 @@ class Copo extends Model
     use HasFactory;
 
     protected $table = 'copos';
-    protected $fillable = ['nome', 'capacidade', 'icone_id', 'usuario_id'];
+    protected $fillable = ['nome', 'capacidade_ml', 'icone_id', 'usuario_id'];
 
     public function usuario()
     {
@@ -20,5 +20,10 @@ class Copo extends Model
     public function icone()
     {
         return $this->belongsTo(Icone::class, 'icone_id');
+    }
+
+    public function consumos()
+    {
+        return $this->hasMany(Consumo::class, 'copo_id');
     }
 }

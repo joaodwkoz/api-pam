@@ -13,7 +13,7 @@ class IconeController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(Icone::all(), 200);
     }
 
     /**
@@ -29,17 +29,7 @@ class IconeController extends Controller
      */
     public function store(Request $request)
     {
-        $icone = Icone::fill($request->except('fotoIcone'));
-
-        if($request->hasFile('fotoIcone')) {
-            $file = $request->file('fotoIcone');
-            $path = $file->store('icones', 'public');
-            $icone->fotoIcone = $path;
-        }
-
-        $icone->save();
-
-        return response()->json($icone, 201);
+        //
     }
 
     /**
@@ -63,33 +53,7 @@ class IconeController extends Controller
      */
     public function update(Request $request, Icone $icone)
     {
-        try {
-            $icone->fill($request->except(['fotoIcone']));
-
-            if($request->hasFile('fotoIcone')){
-                if($icone->fotoIcone){
-                    Storage::disk('public')->delete($icone->fotoIcone);
-                }
-
-                $path = $request->file('fotoIcone')->store('icones', 'public');
-                $icone->fotoIcone = $path;
-            }
-
-            $icone->save();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Usuário atualizado com sucesso!',
-                'icone' => $icone
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Erro ao atualizar usuário.',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+       // 
     }
 
     /**
@@ -97,11 +61,6 @@ class IconeController extends Controller
      */
     public function destroy(Icone $icone)
     {
-        if($icone->fotoIcone){
-            Storage::disk('public')->delete($icone->fotoIcone);
-        }
-
-        $icone->delete();
-        return response()->json(null, 204);
+        //
     }
 }

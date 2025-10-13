@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Copo;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class CopoController extends Controller
 {
+    public function showByUser(Request $request, Usuario $usuario)
+    {
+        return response()->json($usuario->copos->load('icone'), 200);
+    }
+
     public function index()
     {
-        //
+        return response()->json(Copo::all(), 200);
     }
 
     /**
@@ -26,7 +32,7 @@ class CopoController extends Controller
     public function store(Request $request)
     {
         $copo = Copo::create($request->all());
-        return response()->json($copo, 201);
+        return response()->json($copo->load('icone'), 201);
     }
 
     /**
