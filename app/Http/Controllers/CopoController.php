@@ -57,7 +57,7 @@ class CopoController extends Controller
     public function update(Request $request, Copo $copo)
     {
         $copo->update($request->all());
-        return response()->json($copo);
+        return response()->json($copo->fresh()->load('icone'));
     }
 
     /**
