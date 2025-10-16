@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('consumos', function (Blueprint $table) {
             $table->id();
             $table->unsignedSmallInteger('volume_ml');
-            $table->unsignedBigInteger('copo_id');
+            $table->unsignedBigInteger('copo_id')->nullable();
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('copo_id')->references('id')->on('copos')->onDelete('set null');
             $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade'); 

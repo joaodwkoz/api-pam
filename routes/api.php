@@ -11,6 +11,9 @@ use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\ConsumoController;
 use App\Http\Controllers\CopoController;
 use App\Http\Controllers\IconeController;
+use App\Http\Controllers\GlicemiaController;
+use App\Http\Controllers\BatimentoController;
+
 
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
@@ -49,4 +52,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/icones', [IconeController::class, 'index']);
 
     Route::post('/consumo', [ConsumoController::class, 'store']);
+
+    Route::apiResource('glicemias', GlicemiaController::class);
+
+    Route::apiResource('batimentos', BatimentoController::class);
 });
+
+
+

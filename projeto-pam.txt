@@ -1,6 +1,6 @@
 agua (historico)
 pressao (historico)
-sangue (historico)
+batimento cardiaco (historico)
 calorias (ja fez)
 imc (medição de imc)
 frutas (api de frutas e infos da fruta)
