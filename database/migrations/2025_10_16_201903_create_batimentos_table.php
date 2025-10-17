@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('batimentos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('usuario_id');
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->unsignedSmallInteger('bpm');
             $table->enum('condicao', ['repouso', 'pos_exercicio', 'monitoramento', 'aleatorio']);
             $table->dateTime('data_hora_medicao');

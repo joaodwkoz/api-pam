@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('alergias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->unsignedBigInteger('usuario_id');
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->string('nome'); 
             $table->text('descricao')->nullable(); 
             $table->timestamps();

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('imc_registros', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->decimal('peso', 5, 2);
             $table->decimal('altura', 3, 2);
             $table->decimal('imc', 4, 2);

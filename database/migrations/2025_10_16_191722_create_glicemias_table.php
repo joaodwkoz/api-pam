@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('glicemias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('usuario_id')->constrained()->onDelete('cascade');
+            $table->unsignedBigInteger('usuario_id');
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->integer('valor');
             $table->enum('tipo_medicao', ['jejum', 'pre_refeicao', 'pos_refeicao', 'aleatoria']);
             $table->dateTime('data_hora_medicao');
