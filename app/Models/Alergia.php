@@ -10,13 +10,20 @@ class Alergia extends Model
     use HasFactory;
 
     protected $fillable =[
-        'user_id',
+        'usuario_id',
         'nome',
+        'categoria',
+        'gravidade',
         'descricao',
     ];
 
-     public function usuario()
+    public function usuario()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Usuario::class);
+    }
+
+    public function reacoes()
+    {
+        return $this->belongsToMany(Reacao::class);
     }
 }

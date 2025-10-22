@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alergia;
+use App\Models\Reacao;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AlergiaController extends Controller
 {
@@ -14,20 +17,63 @@ class AlergiaController extends Controller
         return response()->json($alergias);
     }
 
-    public function store(Request $request)
-
+    public function showByUser(Request $request, Usuario $usuario)
     {
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'descricao' => 'nullable|string',
-        ]);
+        $alergias = $usuario->alergias;
+        return response()->json($alergias->load('reacoes'), 200);
+    }
 
-        $alergia = $request->user()->alergias()->create([
-            'nome' => $request->nome,
-            'descricao' => $request->descricao,
-        ]);
+    public function store(Request $request)
+    {
+        $alergia = DB::transaction(function () use ($request) {
+            
+            $alergia = $request->user()->alergias()->create([
+                'nome' => $request->nome,
+                'categoria' => $request->categoria,
+                'gravidade' => $request->gravidade,
+                'descricao' => $request->descricao,
+            ]);
 
-        return response()->json($alergia, 201); 
+            $reacaoIds = [];
+            if ($request->has('reacoes') && is_array($request->reacoes)) {
+                foreach($request->reacoes as $nomeReacao) {
+                    $reacao = Reacao::firstOrCreate(['nome' => $nomeReacao]);
+                    $reacaoIds[] = $reacao->id;
+                }
+            }
+
+            if (!empty($reacaoIds)) {
+                $alergia->reacoes()->sync($reacaoIds);
+            }
+
+            return $alergia;
+        });
+
+        return response()->json($alergia->load('reacoes'), 201); 
+    }
+
+    public function update(Request $request, Alergia $alergia)
+    {
+        DB::transaction(function () use ($request, $alergia) {
+            $alergia->update([
+                'nome' => $request->nome,
+                'categoria' => $request->categoria,
+                'gravidade' => $request->gravidade,
+                'descricao' => $request->descricao,
+            ]);
+
+            $reacaoIds = [];
+            if ($request->has('reacoes') && is_array($request->reacoes)) {
+                foreach($request->reacoes as $nomeReacao) {
+                    $reacao = Reacao::firstOrCreate(['nome' => $nomeReacao]);
+                    $reacaoIds[] = $reacao->id;
+                }
+            }
+
+            $alergia->reacoes()->sync($reacaoIds);
+        });
+
+        return response()->json($alergia->load('reacoes'), 200); 
     }
 
     public function destroy(Alergia $alergia)

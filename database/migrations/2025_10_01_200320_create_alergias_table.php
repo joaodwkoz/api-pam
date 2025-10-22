@@ -16,7 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->string('nome'); 
-            $table->text('descricao')->nullable(); 
+            $table->string('categoria');
+            $table->enum('gravidade', ['Leve', 'Moderada', 'Severa']);
+            $table->text('descricao')->nullable();
             $table->timestamps();
         });
     }

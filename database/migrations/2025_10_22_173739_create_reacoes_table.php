@@ -11,23 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('imc_registros', function (Blueprint $table) {
+        Schema::create('reacoes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
-            $table->decimal('peso', 5, 2);
-            $table->decimal('altura', 3, 2);
-            $table->decimal('imc', 4, 2);
+            $table->string('nome');
             $table->timestamps();
         });
     }
-       
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('imc_registros');
+        Schema::dropIfExists('reacoes');
     }
 };

@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/usuario/{usuario}/copos', [CopoController::class, 'showByUser']);
     Route::get('/usuario/{usuario}/consumos', [ConsumoController::class, 'showByUser']);
     Route::get('/usuario/{usuario}/consumos-por-data', [ConsumoController::class, 'showByUserByDate']);
+    Route::get('/usuario/{usuario}/alergias', [AlergiaController::class, 'showByUser']);
     
     Route::get('/alimentos/search', [AlimentoController::class, 'search']);
 
@@ -40,7 +41,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/imc', [ImcController::class, 'store']);
 
     Route::get('/alergias', [AlergiaController::class, 'index']);     
-    Route::post('/alergia', [AlergiaController::class, 'store']);     
+    Route::post('/alergias', [AlergiaController::class, 'store']);
+    Route::put('/alergias/{alergia}', [AlergiaController::class, 'update']); 
     Route::delete('/alergias/{alergia}', [AlergiaController::class, 'destroy']); 
 
     Route::get('/copos', [CopoController::class, 'index']);
