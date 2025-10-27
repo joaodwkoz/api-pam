@@ -34,6 +34,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/usuario/{usuario}/consumos-por-data', [ConsumoController::class, 'showByUserByDate']);
     Route::get('/usuario/{usuario}/consumos-por-periodo', [ConsumoController::class, 'getDetailedHistory']);
 
+    Route::get('/usuario/{usuario}/consumos-grafico', [ConsumoController::class, 'getChartData']);
+
     Route::get('/usuario/{usuario}/alergias', [AlergiaController::class, 'showByUser']);
     
     Route::get('/alimentos/search', [AlimentoController::class, 'search']);
