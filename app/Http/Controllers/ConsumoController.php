@@ -10,6 +10,47 @@ use Illuminate\Support\Carbon;
 
 class ConsumoController extends Controller
 {
+    public function getDetailedHistory(Request $request, Usuario $usuario)
+    {
+        $periodo = $request->input('periodo', 'semana');
+
+        $endDate = Carbon::now()->endOfDay();
+
+        $startDate = match($periodo) {
+            'mes' => Carbon::now()->startOfMonth()->startOfDay(),
+            'ano' => Carbon::now()->startOfYear()->startOfDay(),
+            default => Carbon::now()->subDays(6)->startOfDay(),
+        };
+
+        $consumos = $usuario->consumos()
+            ->whereBetween('consumido_em', [$startDate, $endDate])
+            ->with(['copo.icone'])
+            ->orderBy('consumido_em', 'desc')
+            ->get();
+
+        $groupedHistory = $consumos->groupBy(function ($item) {
+            return Carbon::parse($item->consumido_em)->locale('pt_BR')->isoFormat('D [de] MMMM, dddd');
+        })->map(function ($dayConsumos, $dateLabel) {
+            return [
+                'title' => $dateLabel,
+                'data' => $dayConsumos->map(function ($consumo) {
+                    return [
+                        'id' => $consumo->id,
+                        'volume_ml' => $consumo->volume_ml,
+                        'hora' => Carbon::parse($consumo->consumido_em)->format('H:i'),
+                        'copo_nome' => $consumo->copo->nome ?? 'Manual',
+                        'copo_icone_caminho' => $consumo->copo->icone->caminhoFoto ?? null,
+                    ];
+                })->all(),
+                'total_diario' => (int) $dayConsumos->sum('volume_ml'),
+            ];
+        })->values()->all();
+
+        return response()->json([
+            'historico' => $groupedHistory,
+        ], 200);
+    }
+
     public function showByUser(Request $request, Usuario $usuario)
     {
         return response()->json($usuario->consumos, 200);
