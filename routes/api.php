@@ -36,6 +36,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/usuario/{usuario}/consumos-grafico', [ConsumoController::class, 'getChartData']);
 
+    Route::get('/usuario/{usuario}/batimentos', [BatimentoController::class, 'showByUser']);
+    Route::get('/usuario/{usuario}/batimentos-por-periodo', [BatimentoController::class, 'getDetailedHistory']);
+    Route::get('/usuario/{usuario}/batimentos-grafico', [BatimentoController::class, 'getChartData']);
+
     Route::get('/usuario/{usuario}/alergias', [AlergiaController::class, 'showByUser']);
     
     Route::get('/alimentos/search', [AlimentoController::class, 'search']);
@@ -49,7 +53,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/alergias', [AlergiaController::class, 'index']);     
     Route::post('/alergias', [AlergiaController::class, 'store']);
     Route::put('/alergias/{alergia}', [AlergiaController::class, 'update']); 
-    Route::delete('/alergias/{alergia}', [AlergiaController::class, 'destroy']); 
+    Route::delete('/alergias/{alergia}', [AlergiaController::class, 'destroy']);
+
+    Route::get('/batimentos', [BatimentoController::class, 'index']);     
+    Route::post('/batimentos', [BatimentoController::class, 'store']);
+    Route::put('/batimentos/{batimento}', [BatimentoController::class, 'update']); 
+    Route::delete('/batimentos/{batimento}', [BatimentoController::class, 'destroy']); 
 
     Route::get('/copos', [CopoController::class, 'index']);
     Route::get('/copos/{copo}', [CopoController::class, 'show']);
@@ -62,8 +71,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/consumo', [ConsumoController::class, 'store']);
 
     Route::apiResource('glicemias', GlicemiaController::class);
-
-    Route::apiResource('batimentos', BatimentoController::class);
 });
 
 

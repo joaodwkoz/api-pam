@@ -19,9 +19,9 @@ class ConsumoController extends Controller
 
         $startDate = match($periodo) {
             'hoje' => Carbon::now()->subHours(24),
-            'mes' => Carbon::now()->subDays(30)->endOfDay(),
-            'ano' => Carbon::now()->subDays(365)->endOfDay(),
-            default => Carbon::now()->subDays(7)->endOfDay(),
+            'mes' => Carbon::now()->subDays(30)->startOfDay(),
+            'ano' => Carbon::now()->subDays(365)->startOfDay(),
+            default => Carbon::now()->subDays(7)->startOfDay(),
         };
 
         $groupingFunction = match($periodo) {
@@ -62,9 +62,9 @@ class ConsumoController extends Controller
 
         $startDate = match($periodo) {
             'hoje' => Carbon::now()->subHours(24),
-            'mes' => Carbon::now()->subDays(30)->endOfDay(),
-            'ano' => Carbon::now()->subDays(365)->endOfDay(),
-            default => Carbon::now()->subDays(7)->endOfDay(),
+            'mes' => Carbon::now()->subDays(30)->startOfDay(),
+            'ano' => Carbon::now()->subDays(365)->startOfDay(),
+            default => Carbon::now()->subDays(7)->startOfDay(),
         };
 
         $consumos = $usuario->consumos()
@@ -108,7 +108,7 @@ class ConsumoController extends Controller
         $data = Carbon::parse($dataQuery); 
         
         $comeco = $data->copy()->startOfDay();
-        $fim = $data->copy()->endOfDay();
+        $fim = $data->copy()->startOfDay();
         
         $consumos = $usuario->consumos()
             ->whereBetween('consumido_em', [$comeco, $fim])

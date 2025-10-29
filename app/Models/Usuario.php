@@ -23,6 +23,11 @@ class Usuario extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function batimentos()
+    {
+        return $this->hasMany(Batimento::class, 'usuario_id');
+    }
+
     public function refeicoes()
     {
         return $this->hasMany(Refeicao::class, 'usuario_id');

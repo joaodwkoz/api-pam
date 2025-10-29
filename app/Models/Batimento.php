@@ -11,16 +11,16 @@ class Batimento extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'usuario_id',
         'bpm',
         'condicao',
         'data_hora_medicao',
         'observacoes',
     ];
 
-        public function user(): BelongsTo
+    public function usuario()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Usuario::class);
     }
 
 }
