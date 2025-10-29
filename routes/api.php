@@ -6,7 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RefeicaoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ImcController;
+use App\Http\Controllers\ImcController;
 use App\Http\Controllers\AlergiaController;
 use App\Http\Controllers\ConsumoController;
 use App\Http\Controllers\CopoController;
@@ -41,6 +41,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/usuario/{usuario}/batimentos-grafico', [BatimentoController::class, 'getChartData']);
 
     Route::get('/usuario/{usuario}/alergias', [AlergiaController::class, 'showByUser']);
+
+    Route::get('/usuario/{usuario}/imc/historico', [ImcController::class, 'getDetailedHistory']);
+    Route::get('/usuario/{usuario}/imc/ultimo', [ImcController::class, 'getLatestRegistry']);
     
     Route::get('/alimentos/search', [AlimentoController::class, 'search']);
 

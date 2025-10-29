@@ -94,7 +94,7 @@ class BatimentoController extends Controller
             ->get();
 
         $groupedHistory = $batimentos->groupBy(function ($item) {
-            return Carbon::parse($item->data_hora_medicao)->locale('pt_BR')->isoFormat('D [de] MMMM, dddd');
+            return Carbon::parse($item->data_hora_medicao)->tz('America/Sao_Paulo')->locale('pt_BR')->isoFormat('D [de] MMMM, dddd');
         })->map(function ($dayBatimentos, $dateLabel) {
             return [
                 'title' => $dateLabel,
@@ -103,8 +103,8 @@ class BatimentoController extends Controller
                         'id' => $batimento->id,
                         'bpm' => $batimento->bpm,
                         'condicao' => $batimento->condicao,
-                        'hora' => Carbon::parse($batimento->data_hora_medicao)->format('H:i'),
-                        'data' => Carbon::parse($batimento->data_hora_medicao)->format('d-m-Y'),
+                        'hora' => Carbon::parse($batimento->data_hora_medicao)->tz('America/Sao_Paulo')->format('H:i'),
+                        'data' => Carbon::parse($batimento->data_hora_medicao)->tz('America/Sao_Paulo')->format('d-m-Y'),
                         'observacoes' => $batimento->observacoes
                     ];
                 })->all(),

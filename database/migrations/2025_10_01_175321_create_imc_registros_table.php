@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
             $table->decimal('peso', 5, 2);
             $table->decimal('altura', 3, 2);
-            $table->decimal('imc', 4, 2);
+            $table->decimal('imc', 5, 2);
             $table->timestamps();
         });
     }

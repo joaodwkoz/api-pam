@@ -43,7 +43,7 @@ class Usuario extends Authenticatable
         return $this->hasMany(Consumo::class, 'usuario_id');
     }
 
-    public function registrosIMC()
+    public function imcRegistros()
     {
         return $this->hasMany(ImcRegistro::class, 'usuario_id');
     }
